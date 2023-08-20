@@ -1,0 +1,38 @@
+#notes-container {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#note-input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+#note-color-picker {
+    margin-right: 10px;
+}
+
+.note {
+    padding: 10px;
+    margin: 10px auto;
+    border-radius: 8px;
+    max-width: 300px;
+}
+
+.edit-button,
+.delete-button {
+    padding: 5px 10px;
+    margin: 2px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1050;
+    min-width: 250px;
+}

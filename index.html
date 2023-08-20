@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Colorful Notes</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary font-monospace">
+    <div class="container mt-4 text-danger mb-4">
+        <h2 class="fw-bolder">Colorful Notes</h2>
+        <div id="notes-container" class="row">
+            <div class="col-sm-10 mb-3">
+                <div class="form-floating" style="padding: 0;">
+                    <textarea class="form-control mb-3" placeholder="Write a note here" id="floatingTextarea2" style="height: 130px; width: 100%;" oninput="handleTextareaInput(this)"></textarea>
+                    <label for="floatingTextarea2">Note:</label>
+                </div>
+            </div>
+            <div class="col-sm-2 mb-3">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-outline-secondary w-100 mb-2" id="deleteAllButton">Delete All</button>
+                    <button id="color-change-button" class="btn btn-outline-secondary dropdown-toggle w-100 mb-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">Color</button>
+                    <ul class="dropdown-menu w-100" id="note-color-selector">
+                        <li class="dropdown-item" data-value="#B0C4DE">Blue</li>
+                        <li class="dropdown-item" data-value="#C8A2C8">Lilac</li>
+                        <li class="dropdown-item" data-value="#F08080">Coral</li>
+                        <li class="dropdown-item" data-value="#FFDAB9">Peach</li>
+                        <li class="dropdown-item" data-value="#E6E6FA">Lavender</li>
+                        <li class="dropdown-item" data-value="#98FB98">Green</li>
+                        <li class="dropdown-item" data-value="#FFFACD">Lemon</li>
+                        <li class="dropdown-item" data-value="#F7CAC9">Pale pink</li>
+                        <li class="dropdown-item" data-value="#AACCFF">Baby blue</li>
+                        <li class="dropdown-item" data-value="#D9FFDB">Mint green</li>
+                        <li class="dropdown-item" data-value="#FFDAB9">Peach blossom</li>
+                        <li class="dropdown-item" data-value="#E7AC9A">Rose quartz</li>
+                        <li class="dropdown-item" data-value="#6A5ACD">Slate blue</li>
+                        <li class="dropdown-item" data-value="#D9D8BD">Dusty lavender</li>
+                        <li class="dropdown-item" data-value="#FFE4E1">Misty rose</li>
+                        <li class="dropdown-item" data-value="#FFF5EE">Seashell</li>
+                        <li class="dropdown-item" data-value="#FFFACD">Pale yellow</li>
+                        <li class="dropdown-item" data-value="#B0E0E6">Powder blue</li>        
+                    </ul>                                  
+                </div>
+                <div>
+                    <button type="button" class="btn btn-danger w-100" id="add-note-btn">Add Note</button>
+                </div>
+            </div>
+        </div>
+        <div id="note-list"></div>
+    </div>
+    <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000">
+        <div class="toast-header">
+            <strong class="me-auto">Succesful</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body"></div>
+    </div>    
+    
+    <script src="js/script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
