@@ -12,13 +12,12 @@ Colorful Notes App is a simple browser-based application that allows users to cr
 
 ## Usage
 
-1. Clone or download the project to your computer.
-2. Open the `index.html` file in your browser to start the application.
-3. Enter a note in the text input.
-4. Choose a color for your note using the color picker.
-5. Click the "Add Note" button to add your note.
-6. Use the relevant buttons to view, edit, or delete the created notes.
-7. Use the "Delete All" button to clear all notes.
+1. Go to [this](https://burakunal28.github.io/colorful-notes) link to start the application.
+2. Enter a note in the text input.
+3. Choose a color for your note using the color picker.
+4. Click the "Add Note" button to add your note.
+5. Use the relevant buttons to view, edit, or delete the created notes.
+6. Use the "Delete All" button to clear all notes.
 
 ## Credits
 
