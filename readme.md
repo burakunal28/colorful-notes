@@ -21,7 +21,7 @@ Colorful Notes App is a simple browser-based application that allows users to cr
 
 ## Credits
 
-This JavaScript app create by [Burak Ünal](https://linktr.ee/burakunal28)
+This project created by [Burak Ünal](https://linktr.ee/burakunal28)
 
 ## License
 
