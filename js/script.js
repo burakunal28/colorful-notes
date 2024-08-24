@@ -11,16 +11,8 @@ const deleteAllButton = document.getElementById('deleteAllButton');
 // Add event listener for delete all button
 deleteAllButton.addEventListener('click', deleteAllNotes);
 
-// Function to set the background color
-function setBackgroundColor() {
-    const appBody = document.getElementById('app-body');
-    appBody.style.backgroundColor = '#F8F0E5';
-}
-
-// Call setBackgroundColor when the DOM is fully loaded
+// Load saved notes when the DOM is fully loaded
 window.addEventListener('DOMContentLoaded', () => {
-    setBackgroundColor();
-    
     const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
 
     // If no saved notes, create default notes

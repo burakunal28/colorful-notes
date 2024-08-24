@@ -1,5 +1,5 @@
 /* Set the background color for the entire page */
-html, body {
+#app-body {
     background-color: #F8F0E5;
 }
 
