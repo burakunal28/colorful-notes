@@ -1,25 +1,65 @@
+/* Set the background color for the entire page */
+html body {
+    background-color: #F8F0E5;
+}
+
+/* Center the notes container and add top margin */
 #notes-container {
     text-align: center;
     margin-top: 20px;
 }
 
+/* Style the note input field */
 #note-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
 
+/* Add right margin to the color picker */
 #note-color-picker {
     margin-right: 10px;
 }
 
+/* Style individual notes */
 .note {
     padding: 10px;
     margin: 10px auto;
     border-radius: 8px;
     max-width: 300px;
+    position: relative;
+    font-weight: 400;
 }
 
+/* Style the editable text area of the note */
+.note-text {
+    min-height: 100px;
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    transition: background-color 0.3s, border-color 0.3s;
+}
+
+/* Style the note text area when focused */
+.note-text:focus {
+    outline: none;
+    border-color: #007bff;
+}
+
+/* Style the note text area when in edit mode */
+.edit-mode .note-text {
+    border-color: #007bff;
+}
+
+/* Arrange buttons in a row at the end of the note */
+.buttons-container {
+    display: flex;
+    justify-content: flex-end;
+    gap: 5px;
+}
+
+/* Style edit and delete buttons */
 .edit-button,
 .delete-button {
     padding: 5px 10px;
@@ -29,10 +69,78 @@
     cursor: pointer;
 }
 
+/* Hide save button by default */
+.save-button {
+    display: none;
+}
+
+/* Style the toast notification */
 #toast {
     position: fixed;
     bottom: 20px;
     right: 20px;
     z-index: 1050;
     min-width: 250px;
+}
+
+/* Add margin to the main container */
+.container {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Remove padding from form-floating class */
+.form-floating {
+    padding: 0;
+}
+
+/* Style the floating textarea */
+#floatingTextarea2 {
+    height: 130px;
+    resize: none;
+}
+
+/* Add bottom margin to color change and delete all buttons */
+#color-change-button,
+#deleteAllButton {
+    margin-bottom: 0.5rem;
+}
+
+/* Media query for screens smaller than 576px */
+@media (max-width: 576px) {
+  /* Make columns full width on small screens */
+  #notes-container .col-sm-10,
+  #notes-container .col-sm-2 {
+    width: 100%;
+  }
+
+  /* Arrange buttons in a flex container */
+  #notes-container .col-sm-2 {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+
+  /* Set width for dropdown and button container */
+  #notes-container .col-sm-2 .dropdown,
+  #notes-container .col-sm-2 > div {
+    width: 48%;
+  }
+
+  /* Make buttons full width and add bottom margin */
+  #deleteAllButton,
+  #color-change-button,
+  #add-note-btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+/* Media query for screens smaller than 400px */
+@media (max-width: 400px) {
+  /* Make dropdown and button container full width */
+  #notes-container .col-sm-2 .dropdown,
+  #notes-container .col-sm-2 > div {
+    width: 100%;
+  }
 }

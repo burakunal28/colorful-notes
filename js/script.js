@@ -1,3 +1,4 @@
+// Get DOM elements
 const noteInput = document.getElementById('floatingTextarea2');
 const noteColorSelector = document.getElementById('note-color-selector');
 const addNoteBtn = document.getElementById('add-note-btn');
@@ -6,11 +7,15 @@ const colorChangeButton = document.getElementById('color-change-button');
 const addNoteButton = document.getElementById('add-note-btn');
 const noteTextarea = document.getElementById('floatingTextarea2');
 const deleteAllButton = document.getElementById('deleteAllButton');
+
+// Add event listener for delete all button
 deleteAllButton.addEventListener('click', deleteAllNotes);
 
+// Load saved notes when the DOM is fully loaded
 window.addEventListener('DOMContentLoaded', () => {
     const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
 
+    // If no saved notes, create default notes
     if (savedNotes.length === 0) {
         const defaultNotes = [
             {
@@ -43,34 +48,39 @@ window.addEventListener('DOMContentLoaded', () => {
             }
         ];
            
-
-        defaultNotes.forEach(note => {
+        // Add default notes to saved notes and create note elements
+        for (const note of defaultNotes) {
             savedNotes.push(note);
             createNoteElement(note.text, note.color);
-        });
+        }
 
+        // Save default notes to local storage
         localStorage.setItem('notes', JSON.stringify(savedNotes));
     } else {
-        savedNotes.forEach(note => {
+        // Create note elements for saved notes
+        for (const note of savedNotes) {
             createNoteElement(note.text, note.color);
-        });
+        }
     }
 
+    // Update delete all button state
     updateDeleteAllButtonState(savedNotes.length);
 });
 
-
+// Disable color change and add note buttons initially
 colorChangeButton.disabled = true;
 addNoteButton.disabled = true;
 
-noteTextarea.addEventListener("paste", function(event) {
-  let pastedText = event.clipboardData.getData("text/plain");
-  let paragraphs = pastedText.split("\n");
-  for (let i = 0; i < paragraphs.length; i++) {
-    noteTextarea.insertAdjacentHTML("beforeend", "<p>" + paragraphs[i] + "</p>");
-  }
+// Handle pasting text into the textarea
+noteTextarea.addEventListener("paste", (event) => {
+    const pastedText = event.clipboardData.getData("text/plain");
+    const paragraphs = pastedText.split("\n");
+    for (const paragraph of paragraphs) {
+        noteTextarea.insertAdjacentHTML("beforeend", `<p>${paragraph}</p>`);
+    }
 });
 
+// Function to show toast notifications
 function showToast(message) {
     const toast = new bootstrap.Toast(document.getElementById('toast'));
     const toastBody = document.querySelector('.toast-body');
@@ -78,9 +88,10 @@ function showToast(message) {
     toast.show();
 }
 
-
+// Add event listener for adding a note
 addNoteBtn.addEventListener('click', addNote);
 
+// Handle color selection
 noteColorSelector.addEventListener('click', (event) => {
     const selectedColor = event.target.getAttribute('data-value');
     noteColorSelector.previousElementSibling.textContent = event.target.textContent;
@@ -90,6 +101,7 @@ noteColorSelector.addEventListener('click', (event) => {
     noteColorSelector.parentNode.classList.remove('show');
 });
 
+// Enable/disable buttons based on textarea content
 noteTextarea.addEventListener('input', () => {
     const noteText = noteTextarea.value.trim();
 
@@ -102,10 +114,12 @@ noteTextarea.addEventListener('input', () => {
     }
 });
 
+// Function to show an alert with a header
 function alertWithHeader(header, message) {
     alert(`${header}\n\n${message}`);
 }
 
+// Function to add a new note
 function addNote() {
     const noteText = noteInput.value;
     const noteColor = noteColorSelector.previousElementSibling.style.backgroundColor;
@@ -135,13 +149,14 @@ function addNote() {
     updateDeleteAllButtonState(updatedSavedNotes.length);
 }
 
-
+// Function to save a note to local storage
 function saveNoteToLocalStorage(note) {
     const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
     savedNotes.push(note);
     localStorage.setItem('notes', JSON.stringify(savedNotes));
 }
 
+// Function to create a note element in the DOM
 function createNoteElement(text, color) {
     const noteContainer = document.createElement('div');
     noteContainer.classList.add('note-container', 'card', 'mb-3', 'p-3');
@@ -153,21 +168,39 @@ function createNoteElement(text, color) {
 
     const creationDateElement = document.createElement('div');
     creationDateElement.classList.add('creation-date', 'fw-lighter');
-    creationDateElement.textContent = 'Date: ' + creationDateTime;
+    creationDateElement.textContent = `Date: ${creationDateTime}`;
     
     const noteTextElement = document.createElement('div');
     noteTextElement.classList.add('note-text', 'mt-2', 'mb-2', 'fw-semibold');
     noteTextElement.style.textAlign = "justify";
     noteTextElement.innerHTML = text.replace(/\n/g, '<br>');
+    noteTextElement.contentEditable = true;
+    noteTextElement.style.backgroundColor = 'transparent';
 
     const buttonsContainer = document.createElement('div');
-    buttonsContainer.classList.add('buttons-container', 'text-end');
+    buttonsContainer.classList.add('buttons-container');
 
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
     editButton.classList.add('edit-button', 'btn', 'btn-outline-dark', 'btn-sm');
     editButton.addEventListener('click', () => {
-        editNoteElement(noteTextElement, text);
+        noteContainer.classList.add('edit-mode');
+        noteTextElement.focus();
+        editButton.style.display = 'none';
+        saveButton.style.display = 'inline-block';
+        
+        const lightColor = getLighterColor(color, 0.85);
+        noteTextElement.style.backgroundColor = lightColor;
+    });
+
+    const saveButton = document.createElement('button');
+    saveButton.textContent = 'Save';
+    saveButton.classList.add('save-button', 'btn', 'btn-outline-dark', 'btn-sm');
+    saveButton.style.display = 'none';
+    saveButton.addEventListener('click', () => {
+        saveNoteChanges(noteContainer, noteTextElement);
+        saveButton.style.display = 'none';
+        editButton.style.display = 'inline-block';
     });
 
     const deleteButton = document.createElement('button');
@@ -178,6 +211,7 @@ function createNoteElement(text, color) {
     });
 
     buttonsContainer.appendChild(editButton);
+    buttonsContainer.appendChild(saveButton);
     buttonsContainer.appendChild(deleteButton);
 
     noteContainer.style.backgroundColor = color;
@@ -187,24 +221,26 @@ function createNoteElement(text, color) {
     noteList.appendChild(noteContainer);
 }
 
-function deleteNoteElement(noteContainer, noteText) {
-    const confirmed = confirm('Are you sure you want to delete this note?');
+// Function to get a lighter color
+function getLighterColor(color, factor) {
+    const hex = color.replace('#', '');
+    const r = Number.parseInt(hex.substr(0, 2), 16);
+    const g = Number.parseInt(hex.substr(2, 2), 16);
+    const b = Number.parseInt(hex.substr(4, 2), 16);
 
-    if (confirmed) {
-        const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
-        const updatedNotes = savedNotes.filter(note => note.text !== noteText);
-        localStorage.setItem('notes', JSON.stringify(updatedNotes));
+    const lighterR = Math.round(r + (255 - r) * factor);
+    const lighterG = Math.round(g + (255 - g) * factor);
+    const lighterB = Math.round(b + (255 - b) * factor);
 
-        noteContainer.remove();
-        updateDeleteAllButtonState(updatedNotes.length);
-    }
-
-    showToast('Note deleted successfully');
+    return `rgb(${lighterR}, ${lighterG}, ${lighterB})`;
 }
 
-function editNoteElement(noteTextElement, originalText) {
-    const newText = prompt('Edit note text:', originalText);
-    if (newText !== null) {
+// Function to save changes to a note
+function saveNoteChanges(noteContainer, noteTextElement) {
+    const newText = noteTextElement.innerHTML.replace(/<br>/g, '\n').trim();
+    const originalText = noteTextElement.getAttribute('data-original-text');
+
+    if (newText !== originalText) {
         const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
 
         const updatedNotes = savedNotes.map(note => {
@@ -215,11 +251,30 @@ function editNoteElement(noteTextElement, originalText) {
         });
 
         localStorage.setItem('notes', JSON.stringify(updatedNotes));
-        noteTextElement.textContent = newText;
+        noteTextElement.setAttribute('data-original-text', newText);
         showToast('Note changed successfully');
+    }
+
+    noteContainer.classList.remove('edit-mode');
+    noteTextElement.style.backgroundColor = 'transparent';
+}
+
+// Function to delete a note
+function deleteNoteElement(noteContainer, noteText) {
+    const confirmed = confirm('Are you sure you want to delete this note?');
+
+    if (confirmed) {
+        const savedNotes = JSON.parse(localStorage.getItem('notes')) || [];
+        const updatedNotes = savedNotes.filter(note => note.text !== noteText);
+        localStorage.setItem('notes', JSON.stringify(updatedNotes));
+
+        noteContainer.remove();
+        updateDeleteAllButtonState(updatedNotes.length);
+        showToast('Note deleted successfully');
     }
 }
 
+// Function to delete all notes
 function deleteAllNotes() {
     const confirmed = confirm('Are you sure you want to delete all notes?');
 
@@ -231,6 +286,7 @@ function deleteAllNotes() {
     }
 }
 
+// Function to update the state of the delete all button
 function updateDeleteAllButtonState(noteCount) {
     if (noteCount >= 2) {
         deleteAllButton.disabled = false;
