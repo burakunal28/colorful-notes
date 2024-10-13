@@ -18,10 +18,10 @@ Colorful Notes App is a simple browser-based application that allows users to cr
 4. Use the relevant buttons to view, edit, or delete the created notes.
 5. Use the "Delete All" button to clear all notes.
 
-## Credits
+## Developer 👨‍💻
 
-This project created by [Burak Ünal](https://linktr.ee/burakunal28)
+Created by [Burak Ünal](https://burakunal28.vercel.app/)
 
 ## License
 
-This project is licensed under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE).
