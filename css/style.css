@@ -1,27 +1,29 @@
-/* Set the background color for the entire page */
+/* Set the background color for the entire application body */
 #app-body {
-    background-color: #F8F0E5;
+    background-color: #e4dfdb;
 }
 
-/* Center the notes container and add top margin */
+/* Center the notes container and add margin at the top */
 #notes-container {
+    display: flex;
+    align-items: stretch;
     text-align: center;
     margin-top: 20px;
 }
 
-/* Style the note input field */
+/* Style the input field for adding notes */
 #note-input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
 }
 
-/* Add right margin to the color picker */
+/* Add margin to the right of the color picker */
 #note-color-picker {
     margin-right: 10px;
 }
 
-/* Style individual notes */
+/* Style for individual notes with padding and margin */
 .note {
     padding: 10px;
     margin: 10px auto;
@@ -31,7 +33,40 @@
     font-weight: 400;
 }
 
-/* Style the editable text area of the note */
+/* Set text color based on specific background colors for notes */
+.note[style*="background-color: #B0C4DE"] .note-text,
+.note[style*="background-color: #AACCFF"] .note-text,
+.note[style*="background-color: #B0E0E6"] .note-text {
+    color: #1E3D59;
+}
+
+.note[style*="background-color: #C8A2C8"] .note-text,
+.note[style*="background-color: #E6E6FA"] .note-text,
+.note[style*="background-color: #D9D8BD"] .note-text {
+    color: #4A235A;
+}
+
+.note[style*="background-color: #F08080"] .note-text,
+.note[style*="background-color: #F7CAC9"] .note-text,
+.note[style*="background-color: #FFE4E1"] .note-text {
+    color: #922B21;
+}
+
+.note[style*="background-color: #FFDAB9"] .note-text,
+.note[style*="background-color: #E7AC9A"] .note-text {
+    color: #7E5109;
+}
+
+.note[style*="background-color: #98FB98"] .note-text,
+.note[style*="background-color: #D9FFDB"] .note-text {
+    color: #1D8348;
+}
+
+.note[style*="background-color: #FFFACD"] .note-text {
+    color: #7D6608;
+}
+
+/* Style for the editable text area within notes */
 .note-text {
     min-height: 100px;
     padding: 5px;
@@ -41,40 +76,30 @@
     transition: background-color 0.3s, border-color 0.3s;
 }
 
-/* Style the note text area when focused */
+/* Focus state styling for the note text area */
 .note-text:focus {
     outline: none;
     border-color: #007bff;
 }
 
-/* Style the note text area when in edit mode */
+/* Styling for the note text area when in edit mode */
 .edit-mode .note-text {
     border-color: #007bff;
 }
 
-/* Arrange buttons in a row at the end of the note */
+/* Arrange buttons in a row at the bottom of the note */
 .buttons-container {
     display: flex;
     justify-content: flex-end;
     gap: 5px;
 }
 
-/* Style edit and delete buttons */
-.edit-button,
-.delete-button {
-    padding: 5px 10px;
-    margin: 2px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-/* Hide save button by default */
+/* Hide the save button by default */
 .save-button {
     display: none;
 }
 
-/* Style the toast notification */
+/* Style for the toast notification that appears at the bottom */
 #toast {
     position: fixed;
     bottom: 20px;
@@ -83,30 +108,31 @@
     min-width: 250px;
 }
 
-/* Add margin to the main container */
+/* Add margin to the main container for spacing */
 .container {
     margin-top: 1.5rem;
     margin-bottom: 1.5rem;
 }
 
-/* Remove padding from form-floating class */
+/* Remove padding from the form-floating class for full height */
 .form-floating {
     padding: 0;
+    height: 100%;
 }
 
-/* Style the floating textarea */
+/* Style for the floating textarea to prevent resizing */
 #floatingTextarea2 {
-    height: 130px;
     resize: none;
+    height: 100%;
 }
 
-/* Add bottom margin to color change and delete all buttons */
+/* Add bottom margin to buttons for color change and delete all */
 #color-change-button,
 #deleteAllButton {
     margin-bottom: 0.5rem;
 }
 
-/* Media query for screens smaller than 576px */
+/* Media query for responsive design on small screens */
 @media (max-width: 576px) {
   /* Make columns full width on small screens */
   #notes-container .col-sm-10,
@@ -114,7 +140,7 @@
     width: 100%;
   }
 
-  /* Arrange buttons in a flex container */
+  /* Arrange buttons in a flex container for better layout */
   #notes-container .col-sm-2 {
     display: flex;
     flex-wrap: wrap;
@@ -136,11 +162,97 @@
   }
 }
 
-/* Media query for screens smaller than 400px */
+/* Media query for very small screens */
 @media (max-width: 400px) {
   /* Make dropdown and button container full width */
   #notes-container .col-sm-2 .dropdown,
   #notes-container .col-sm-2 > div {
     width: 100%;
   }
+}
+
+/* Set text color and border color based on background color for note containers */
+.note-container[style*="background-color: rgb(176, 196, 222)"] .note-text {
+    color: #1E3D59;
+    border-color: #1E3D59;
+}
+
+.note-container[style*="background-color: rgb(170, 204, 255)"] .note-text {
+    color: #1E3D59;
+    border-color: #1E3D59;
+}
+
+.note-container[style*="background-color: rgb(176, 224, 230)"] .note-text {
+    color: #1E3D59;
+    border-color: #1E3D59;
+}
+
+.note-container[style*="background-color: rgb(200, 162, 200)"] .note-text {
+    color: #4A235A;
+    border-color: #4A235A;
+}
+
+.note-container[style*="background-color: rgb(230, 230, 250)"] .note-text {
+    color: #4A235A;
+    border-color: #4A235A;
+}
+
+.note-container[style*="background-color: rgb(217, 216, 189)"] .note-text {
+    color: #4A235A;
+    border-color: #4A235A;
+}
+
+.note-container[style*="background-color: rgb(240, 128, 128)"] .note-text {
+    color: #922B21;
+    border-color: #922B21;
+}
+
+.note-container[style*="background-color: rgb(247, 202, 201)"] .note-text {
+    color: #922B21;
+    border-color: #922B21;
+}
+
+.note-container[style*="background-color: rgb(255, 228, 225)"] .note-text {
+    color: #922B21;
+    border-color: #922B21;
+}
+
+.note-container[style*="background-color: rgb(255, 218, 185)"] .note-text {
+    color: #7E5109;
+    border-color: #7E5109;
+}
+
+.note-container[style*="background-color: rgb(231, 172, 154)"] .note-text {
+    color: #7E5109;
+    border-color: #7E5109;
+}
+
+.note-container[style*="background-color: rgb(152, 251, 152)"] .note-text {
+    color: #1D8348;
+    border-color: #1D8348;
+}
+
+.note-container[style*="background-color: rgb(217, 255, 219)"] .note-text {
+    color: #1D8348;
+    border-color: #1D8348;
+}
+
+.note-container[style*="background-color: rgb(255, 250, 205)"] .note-text {
+    color: #7D6608;
+    border-color: #7D6608;
+}
+
+/* Style the button container to distribute buttons evenly */
+#notes-container .col-sm-2 {
+    display: flex;
+    flex-direction: column;
+}
+
+#notes-container .col-sm-2 .btn {
+    flex-grow: 1;
+    margin-bottom: 0.5rem;
+}
+
+#notes-container .col-sm-2 .btn:last-child {
+    margin-bottom: 0;
 }

@@ -4,102 +4,37 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Colorful Notes</title>
-    <!-- Custom CSS -->
+    <!-- Link to custom CSS for styling the application -->
     <link rel="stylesheet" href="css/style.css">
-    <!-- Bootstrap CSS -->
+    <!-- Link to Bootstrap CSS for responsive design and components -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
 </head>
 <body class="font-monospace" id="app-body">
     <div class="container text-primary">
-        <!-- App title -->
+        <!-- Main title of the application -->
         <h2 class="fw-bolder">Colorful Notes</h2>
-        
-        <!-- Information accordion -->
-        <div class="accordion mb-4" id="infoAccordion">
-            <!-- Features section -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#featuresCollapse" aria-expanded="false" aria-controls="featuresCollapse">
-                        Features
-                    </button>
-                </h2>
-                <div id="featuresCollapse" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
-                    <div class="accordion-body">
-                        <ul>
-                            <li>Create notes with text input.</li>
-                            <li>Color your notes by selecting from different color options.</li>
-                            <li>View the creation date of each note.</li>
-                            <li>Edit or delete individual notes.</li>
-                            <li>Clear all notes with a single click.</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!-- Usage section -->
-            <div class="accordion-item">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#usageCollapse" aria-expanded="false" aria-controls="usageCollapse">
-                        Usage
-                    </button>
-                </h2>
-                <div id="usageCollapse" class="accordion-collapse collapse" data-bs-parent="#infoAccordion">
-                    <div class="accordion-body">
-                        <ol>
-                            <li>Enter a note in the text input.</li>
-                            <li>Choose a color for your note using the color picker.</li>
-                            <li>Click the "Add Note" button to add your note.</li>
-                            <li>Use the relevant buttons to view, edit, or delete the created notes.</li>
-                            <li>Use the "Delete All" button to clear all notes.</li>
-                        </ol>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Note input area -->
-        <div id="notes-container" class="row">
-            <!-- Textarea for note input -->
+
+        <!-- Input area for creating new notes -->
+        <div id="notes-container" class="row align-items-stretch">
+            <!-- Textarea for user to input notes -->
             <div class="col-sm-10 mb-3">
-                <div class="form-floating">
-                    <textarea class="form-control mb-3" placeholder="Write a note here" id="floatingTextarea2" oninput="handleTextareaInput(this)"></textarea>
+                <div class="form-floating h-100">
+                    <textarea class="form-control h-100" placeholder="Write a note here" id="floatingTextarea2"></textarea>
                     <label for="floatingTextarea2">Note:</label>
                 </div>
             </div>
-            <!-- Color selection and add note button -->
-            <div class="col-sm-2 mb-3">
-                <div class="dropdown">
-                    <button type="button" class="btn btn-outline-secondary w-100" id="deleteAllButton">Delete All</button>
-                    <button id="color-change-button" class="btn btn-outline-secondary dropdown-toggle w-100" type="button" data-bs-toggle="dropdown" aria-expanded="false">Color</button>
-                    <ul class="dropdown-menu w-100" id="note-color-selector">
-                        <li class="dropdown-item" data-value="#B0C4DE">Blue</li>
-                        <li class="dropdown-item" data-value="#C8A2C8">Lilac</li>
-                        <li class="dropdown-item" data-value="#F08080">Coral</li>
-                        <li class="dropdown-item" data-value="#FFDAB9">Peach</li>
-                        <li class="dropdown-item" data-value="#E6E6FA">Lavender</li>
-                        <li class="dropdown-item" data-value="#98FB98">Green</li>
-                        <li class="dropdown-item" data-value="#FFFACD">Lemon</li>
-                        <li class="dropdown-item" data-value="#F7CAC9">Pale pink</li>
-                        <li class="dropdown-item" data-value="#AACCFF">Baby blue</li>
-                        <li class="dropdown-item" data-value="#D9FFDB">Mint green</li>
-                        <li class="dropdown-item" data-value="#FFDAB9">Peach blossom</li>
-                        <li class="dropdown-item" data-value="#E7AC9A">Rose quartz</li>
-                        <li class="dropdown-item" data-value="#D9D8BD">Dusty lavender</li>
-                        <li class="dropdown-item" data-value="#FFE4E1">Misty rose</li>
-                        <li class="dropdown-item" data-value="#FFFACD">Pale yellow</li>
-                        <li class="dropdown-item" data-value="#B0E0E6">Powder blue</li>        
-                    </ul>                                  
-                </div>
-                <div>
-                    <button type="button" class="btn btn-primary w-100" id="add-note-btn">Add Note</button>
-                </div>
+            <!-- Buttons for note actions -->
+            <div class="col-sm-2 mb-3 d-flex flex-column">
+                <button type="button" class="btn btn-secondary mb-2 flex-grow-1" id="deleteAllButton">Delete All</button>
+                <button type="button" class="btn btn-primary flex-grow-1" id="add-note-btn">Add Note</button>
             </div>
         </div>
-        <!-- Container for displaying notes -->
+        <!-- Section for displaying the list of notes -->
         <div id="note-list"></div>
     </div>
 
-    <!-- Toast for notifications -->
+    <!-- Toast notification for user feedback -->
     <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-autohide="true" data-bs-delay="2000">
         <div class="toast-header">
             <strong class="me-auto">Successful</strong>
@@ -108,12 +43,12 @@
         <div class="toast-body"></div>
     </div>    
     
-    <!-- Footer section -->
+    <!-- Footer with creator information and links -->
     <footer class="container text-center mt-5 mb-3">
         <p>Created by <a href="https://linktr.ee/burakunal28" target="_blank" rel="noopener">Burak Ünal</a> | <a href="https://github.com/burakunal28/colorful-notes" target="_blank" rel="noopener">GitHub Repository</a></p>
     </footer>
     
-    <!-- JavaScript files -->
+    <!-- JavaScript files for functionality -->
     <script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>

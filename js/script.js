@@ -1,11 +1,7 @@
 // Get DOM elements
 const noteInput = document.getElementById('floatingTextarea2');
-const noteColorSelector = document.getElementById('note-color-selector');
 const addNoteBtn = document.getElementById('add-note-btn');
 const noteList = document.getElementById('note-list');
-const colorChangeButton = document.getElementById('color-change-button');
-const addNoteButton = document.getElementById('add-note-btn');
-const noteTextarea = document.getElementById('floatingTextarea2');
 const deleteAllButton = document.getElementById('deleteAllButton');
 
 // Add event listener for delete all button
@@ -19,31 +15,31 @@ window.addEventListener('DOMContentLoaded', () => {
     if (savedNotes.length === 0) {
         const defaultNotes = [
             {
-                text: 'Hey, remember to buy groceries for dinner tonight. We need veggies, fruits, pasta, and some snacks. Oh, and don\'t forget the chocolate—because life is just better with chocolate, right?',
+                text: 'Hey, remember to buy groceries for dinner tonight. We need veggies, fruits, pasta, and some snacks. Oh, and don\'t forget the chocolate—because life is just better with chocolate, right? - Monica',
                 color: '#F08080'
             },
             {
-                text: 'Dude, there\'s an important meeting at 2 PM. You got this! Review the slides, gather data, and practice those power poses. By the way, did you know that pretending to be a confident peacock boosts your presentation skills?',
+                text: 'Dude, there\'s an important meeting at 2 PM. You got this! Review the slides, gather data, and practice those power poses. By the way, did you know that pretending to be a confident peacock boosts your presentation skills? - Chandler',
                 color: '#98FB98'
             },
             {
-                text: 'Guess what? It\'s Mom\'s birthday next weekend! Call her to wish her a happy birthday and discuss the family gathering plans. And remember, let\'s avoid bringing up the time we turned the living room into a mini waterpark. This year, let\'s stick to classic party games and, of course, cake!',
+                text: 'Guess what? It\'s Mom\'s birthday next weekend! Call her to wish her a happy birthday and discuss the family gathering plans. And remember, let\'s avoid bringing up the time we turned the living room into a mini waterpark. This year, let\'s stick to classic party games and, of course, cake! - Ross',
                 color: '#AACCFF'
             },
             {
-                text: 'Hey, did you hear about the latest superhero movie? We should totally catch it this weekend. Popcorn, comfy seats, and epic action scenes—what more could we ask for?',
+                text: 'Hey, did you hear about the latest superhero movie? We should totally catch it this weekend. Popcorn, comfy seats, and epic action scenes—what more could we ask for? - Joey',
                 color: '#C8A2C8'
             },
             {
-                text: 'I can\'t believe the weekend is almost here again. Let\'s plan a spontaneous road trip! We\'ll bring our favorite tunes, some questionable snacks, and embark on an adventure. Who cares where we end up as long as we have fun?',
+                text: 'I can\'t believe the weekend is almost here again. Let\'s plan a spontaneous road trip! We\'ll bring our favorite tunes, some questionable snacks, and embark on an adventure. Who cares where we end up as long as we have fun? - Phoebe',
                 color: '#F08080'
             },
             {
-                text: 'Remember that wild concert last year? Let\'s relive the memories and plan another night of live music and dancing. I\'ll grab the tickets if you promise not to sing along off-key this time!',
+                text: 'Remember that wild concert last year? Let\'s relive the memories and plan another night of live music and dancing. I\'ll grab the tickets if you promise not to sing along off-key this time! - Rachel',
                 color: '#98FB98'
             },
             {
-                text: 'Movie marathon, anyone? Let\'s binge-watch our favorite classic films, stock up on popcorn, and get cozy. Just don\'t judge me when I cry during that emotional scene we\'ve seen a million times!',
+                text: 'Movie marathon, anyone? Let\'s binge-watch our favorite classic films, stock up on popcorn, and get cozy. Just don\'t judge me when I cry during that emotional scene we\'ve seen a million times! - Monica',
                 color: '#AACCFF'
             }
         ];
@@ -67,16 +63,15 @@ window.addEventListener('DOMContentLoaded', () => {
     updateDeleteAllButtonState(savedNotes.length);
 });
 
-// Disable color change and add note buttons initially
-colorChangeButton.disabled = true;
-addNoteButton.disabled = true;
+// Disable add note button initially
+addNoteBtn.disabled = true;
 
 // Handle pasting text into the textarea
-noteTextarea.addEventListener("paste", (event) => {
+noteInput.addEventListener("paste", (event) => {
     const pastedText = event.clipboardData.getData("text/plain");
     const paragraphs = pastedText.split("\n");
     for (const paragraph of paragraphs) {
-        noteTextarea.insertAdjacentHTML("beforeend", `<p>${paragraph}</p>`);
+        noteInput.insertAdjacentHTML("beforeend", `<p>${paragraph}</p>`);
     }
 });
 
@@ -91,27 +86,9 @@ function showToast(message) {
 // Add event listener for adding a note
 addNoteBtn.addEventListener('click', addNote);
 
-// Handle color selection
-noteColorSelector.addEventListener('click', (event) => {
-    const selectedColor = event.target.getAttribute('data-value');
-    noteColorSelector.previousElementSibling.textContent = event.target.textContent;
-    noteColorSelector.previousElementSibling.style.backgroundColor = selectedColor;
-
-    colorChangeButton.style.color = '#000';
-    noteColorSelector.parentNode.classList.remove('show');
-});
-
-// Enable/disable buttons based on textarea content
-noteTextarea.addEventListener('input', () => {
-    const noteText = noteTextarea.value.trim();
-
-    if (noteText === '') {
-        colorChangeButton.disabled = true;
-        addNoteButton.disabled = true;
-    } else {
-        colorChangeButton.disabled = false;
-        addNoteButton.disabled = false;
-    }
+// Enable/disable add note button based on textarea content
+noteInput.addEventListener('input', () => {
+    addNoteBtn.disabled = noteInput.value.trim() === '';
 });
 
 // Function to show an alert with a header
@@ -121,30 +98,30 @@ function alertWithHeader(header, message) {
 
 // Function to add a new note
 function addNote() {
-    const noteText = noteInput.value;
-    const noteColor = noteColorSelector.previousElementSibling.style.backgroundColor;
-
-    if (noteColor === '') {
-        alert('Please select a color!');
+    const noteText = noteInput.value.trim();
+    
+    if (!noteText) {
         return;
     }
+    
+    const colors = [
+        '#B0C4DE', '#C8A2C8', '#F08080', '#FFDAB9', '#E6E6FA', '#98FB98', '#FFFACD',
+        '#F7CAC9', '#AACCFF', '#D9FFDB', '#FFDAB9', '#E7AC9A', '#D9D8BD', '#FFE4E1',
+        '#FFFACD', '#B0E0E6'
+    ];
+    const randomColor = colors[Math.floor(Math.random() * colors.length)];
 
-    const note = { text: noteText, color: noteColor };
+    const note = { text: noteText, color: randomColor };
     saveNoteToLocalStorage(note);
-    createNoteElement(noteText, noteColor);
+    createNoteElement(noteText, randomColor);
 
     noteInput.value = '';
-    noteColorSelector.previousElementSibling.textContent = 'Change color';
-    noteColorSelector.previousElementSibling.style.backgroundColor = '';
-
-    colorChangeButton.disabled = true;
-    addNoteButton.disabled = true;
+    addNoteBtn.disabled = true;
 
     window.scrollTo(0, document.body.scrollHeight);
 
     showToast('Note added successfully');
 
-    // Retrieve updated savedNotes from local storage
     const updatedSavedNotes = JSON.parse(localStorage.getItem('notes')) || [];
     updateDeleteAllButtonState(updatedSavedNotes.length);
 }
@@ -162,14 +139,17 @@ function createNoteElement(text, color) {
     noteContainer.classList.add('note-container', 'card', 'mb-3', 'p-3');
 
     const now = new Date();
-    const creationDate = now.toLocaleDateString('en-GB');
-    const creationTime = now.toLocaleTimeString('en-GB', { hour12: false });
-    const creationDateTime = `${creationDate}, ${creationTime}`;
-
+    const creationDate = now.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' }).replace(/ /g, ' ');
+    const creationTime = now.toLocaleTimeString('en-GB', { hour12: false, hour: '2-digit', minute: '2-digit' });
+    
     const creationDateElement = document.createElement('div');
     creationDateElement.classList.add('creation-date', 'fw-lighter');
-    creationDateElement.textContent = `Date: ${creationDateTime}`;
-    
+    creationDateElement.innerHTML = `${creationDate} - ${creationTime}`;
+
+    // Set text color for creation date based on background color
+    const textColor = getTextColor(color);
+    creationDateElement.style.color = textColor;
+
     const noteTextElement = document.createElement('div');
     noteTextElement.classList.add('note-text', 'mt-2', 'mb-2', 'fw-semibold');
     noteTextElement.style.textAlign = "justify";
@@ -177,12 +157,15 @@ function createNoteElement(text, color) {
     noteTextElement.contentEditable = true;
     noteTextElement.style.backgroundColor = 'transparent';
 
+    // Set text color based on background color
+    noteTextElement.style.color = textColor;
+
     const buttonsContainer = document.createElement('div');
     buttonsContainer.classList.add('buttons-container');
 
     const editButton = document.createElement('button');
     editButton.textContent = 'Edit';
-    editButton.classList.add('edit-button', 'btn', 'btn-outline-dark', 'btn-sm');
+    editButton.classList.add('edit-button', 'btn', 'btn-dark', 'btn-sm');
     editButton.addEventListener('click', () => {
         noteContainer.classList.add('edit-mode');
         noteTextElement.focus();
@@ -195,7 +178,7 @@ function createNoteElement(text, color) {
 
     const saveButton = document.createElement('button');
     saveButton.textContent = 'Save';
-    saveButton.classList.add('save-button', 'btn', 'btn-outline-dark', 'btn-sm');
+    saveButton.classList.add('save-button', 'btn', 'btn-dark', 'btn-sm');
     saveButton.style.display = 'none';
     saveButton.addEventListener('click', () => {
         saveNoteChanges(noteContainer, noteTextElement);
@@ -205,7 +188,7 @@ function createNoteElement(text, color) {
 
     const deleteButton = document.createElement('button');
     deleteButton.textContent = 'Delete';
-    deleteButton.classList.add('delete-button', 'btn', 'btn-outline-secondary', 'btn-sm');
+    deleteButton.classList.add('delete-button', 'btn', 'btn-secondary', 'btn-sm');
     deleteButton.addEventListener('click', () => {
         deleteNoteElement(noteContainer, text);
     });
@@ -215,6 +198,11 @@ function createNoteElement(text, color) {
     buttonsContainer.appendChild(deleteButton);
 
     noteContainer.style.backgroundColor = color;
+
+    // Set a lighter background color for the note container
+    const lightColor = getLighterColor(color, 0.85);
+    noteContainer.style.backgroundColor = lightColor;
+    
     noteContainer.appendChild(creationDateElement);
     noteContainer.appendChild(noteTextElement);
     noteContainer.appendChild(buttonsContainer);
@@ -224,9 +212,9 @@ function createNoteElement(text, color) {
 // Function to get a lighter color
 function getLighterColor(color, factor) {
     const hex = color.replace('#', '');
-    const r = Number.parseInt(hex.substr(0, 2), 16);
-    const g = Number.parseInt(hex.substr(2, 2), 16);
-    const b = Number.parseInt(hex.substr(4, 2), 16);
+    const r = parseInt(hex.substring(0, 2), 16);
+    const g = parseInt(hex.substring(2, 4), 16);
+    const b = parseInt(hex.substring(4, 6), 16);
 
     const lighterR = Math.round(r + (255 - r) * factor);
     const lighterG = Math.round(g + (255 - g) * factor);
@@ -292,5 +280,33 @@ function updateDeleteAllButtonState(noteCount) {
         deleteAllButton.disabled = false;
     } else {
         deleteAllButton.disabled = true;
+    }
+}
+
+// Function to get the appropriate text color based on the background color
+function getTextColor(backgroundColor) {
+    switch (backgroundColor) {
+        case '#B0C4DE':
+        case '#AACCFF':
+        case '#B0E0E6':
+            return '#1E3D59';
+        case '#C8A2C8':
+        case '#E6E6FA':
+        case '#D9D8BD':
+            return '#4A235A';
+        case '#F08080':
+        case '#F7CAC9':
+        case '#FFE4E1':
+            return '#922B21';
+        case '#FFDAB9':
+        case '#E7AC9A':
+            return '#7E5109';
+        case '#98FB98':
+        case '#D9FFDB':
+            return '#1D8348';
+        case '#FFFACD':
+            return '#7D6608';
+        default:
+            return '#000000';
     }
 }
